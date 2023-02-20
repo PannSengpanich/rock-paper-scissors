@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+  </head>
+  <body>
+    <script>
+      function game() {
+        let yourscore = 0;
+        let PCscore = 0;
+        for (let i = 0; i < 5; i++) {
+          const playerSelection = prompt(
+            "enter rock, paper or scissors"
+          ).toLowerCase();
+          const computerSelection = getComputerChoice();
+          let res = playRound(playerSelection, computerSelection);
+          if (res == "You lose") {
+            PCscore += 1;
+          }
+          if (res == "You win") {
+            yourscore += 1;
+          }
+          if (res == "undefined") {
+            alert("Please enter proper input");
+            i -= 1;
+            continue;
+          }
+          alert(res + "\nYour score = " + yourscore + "\nPCscore = " + PCscore);
+        }
+        alert(
+          "Your final score = " + yourscore + "\nPC final score = " + PCscore
+        );
+      }
+      function getComputerChoice() {
+        let arr = ["rock", "paper", "scissors"];
+        let randindex = Math.floor(Math.random() * arr.length);
+        return arr[randindex];
+      }
+      function playRound(playerSelection, computerSelection) {
+        let res = [playerSelection, computerSelection];
+        if (res[0] == "rock" && res[1] == "paper") {
+          return "You lose";
+        }
+        if (res[0] == "rock" && res[1] == "rock") {
+          return "Draw";
+        }
+        if (res[0] == "rock" && res[1] == "scissors") {
+          return "You win";
+        }
+        if (res[0] == "paper" && res[1] == "paper") {
+          return "Draw";
+        }
+        if (res[0] == "paper" && res[1] == "rock") {
+          return "You win";
+        }
+        if (res[0] == "paper" && res[1] == "scissors") {
+          return "You lose";
+        }
+        if (res[0] == "scissors" && res[1] == "paper") {
+          return "You win";
+        }
+        if (res[0] == "scissors" && res[1] == "rock") {
+          return "You lose";
+        }
+        if (res[0] == "scissors" && res[1] == "scissors") {
+          return "Draw";
+        } else {
+          return "undefined";
+        }
+      }
+      console.log(game());
+    </script>
+  </body>
+</html>
