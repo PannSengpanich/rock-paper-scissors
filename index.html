@@ -10,72 +10,63 @@
     <button id="rock">ROCK</button>
     <button id="paper">PAPER</button>
     <button id="scissors">SCISSORS</button>
+    <div id="yourscore">Your Score: 0</div>
+    <div id="pcscore">PC Score: 0</div>
     <script>
-      function game() {
-        let yourscore = 0;
-        let PCscore = 0;
-        for (let i = 0; i < 5; i++) {
-          const playerSelection = prompt(
-            "enter rock, paper or scissors"
-          ).toLowerCase();
+      const rock = document.querySelector("#rock");
+      const paper = document.querySelector("#paper");
+      const scissors = document.querySelector("#scissors");
+      const yourscore = document.querySelector("#yourscore");
+      const pcscore = document.querySelector("#pcscore");
 
-          const computerSelection = getComputerChoice();
-          let res = playRound(playerSelection, computerSelection);
-          if (res == "You lose") {
-            PCscore += 1;
-          }
-          if (res == "You win") {
-            yourscore += 1;
-          }
-          if (res == "undefined") {
-            alert("Please enter proper input");
-            i -= 1;
-            continue;
-          }
-          alert(res + "\nYour score = " + yourscore + "\nPCscore = " + PCscore);
+      let yourScoreValue = 0;
+      let pcScoreValue = 0;
+
+      rock.addEventListener("click", () => game("rock"));
+      paper.addEventListener("click", () => game("paper"));
+      scissors.addEventListener("click", () => game("scissors"));
+
+      function game(playerSelection) {
+        const computerSelection = getComputerChoice();
+        const result = playRound(playerSelection, computerSelection);
+
+        if (result === "You win") {
+          yourScoreValue++;
+        } else if (result === "You lose") {
+          pcScoreValue++;
         }
+
+        yourscore.textContent = `Your Score: ${yourScoreValue}`;
+        pcscore.textContent = `PC Score: ${pcScoreValue}`;
         alert(
-          "Your final score = " + yourscore + "\nPC final score = " + PCscore
+          `${result}\nYour score = ${yourScoreValue}\nPC score = ${pcScoreValue}`
         );
+        if (yourScoreValue === 5) {
+          alert("You won the game!");
+        } else if (pcScoreValue === 5) {
+          alert("You lost the game. PC wins!");
+        }
       }
+
       function getComputerChoice() {
-        let arr = ["rock", "paper", "scissors"];
-        let randindex = Math.floor(Math.random() * arr.length);
-        return arr[randindex];
+        const choices = ["rock", "paper", "scissors"];
+        const randomIndex = Math.floor(Math.random() * choices.length);
+        return choices[randomIndex];
       }
+
       function playRound(playerSelection, computerSelection) {
-        let res = [playerSelection, computerSelection];
-        if (res[0] == "rock" && res[1] == "paper") {
-          return "You lose";
-        }
-        if (res[0] == "rock" && res[1] == "rock") {
+        if (playerSelection === computerSelection) {
           return "Draw";
-        }
-        if (res[0] == "rock" && res[1] == "scissors") {
+        } else if (
+          (playerSelection === "rock" && computerSelection === "scissors") ||
+          (playerSelection === "paper" && computerSelection === "rock") ||
+          (playerSelection === "scissors" && computerSelection === "paper")
+        ) {
           return "You win";
-        }
-        if (res[0] == "paper" && res[1] == "paper") {
-          return "Draw";
-        }
-        if (res[0] == "paper" && res[1] == "rock") {
-          return "You win";
-        }
-        if (res[0] == "paper" && res[1] == "scissors") {
-          return "You lose";
-        }
-        if (res[0] == "scissors" && res[1] == "paper") {
-          return "You win";
-        }
-        if (res[0] == "scissors" && res[1] == "rock") {
-          return "You lose";
-        }
-        if (res[0] == "scissors" && res[1] == "scissors") {
-          return "Draw";
         } else {
-          return "undefined";
+          return "You lose";
         }
       }
-      console.log(game());
     </script>
   </body>
 </html>
