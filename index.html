@@ -18,6 +18,7 @@
           const playerSelection = prompt(
             "enter rock, paper or scissors"
           ).toLowerCase();
+
           const computerSelection = getComputerChoice();
           let res = playRound(playerSelection, computerSelection);
           if (res == "You lose") {
