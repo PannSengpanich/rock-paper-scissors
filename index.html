@@ -7,14 +7,34 @@
     <title>Rock Paper Scissors</title>
   </head>
   <body>
+    <button id="rock">ROCK</button>
+    <button id="paper">PAPER</button>
+    <button id="scissors">SCISSORS</button>
     <script>
+      window.addEventListener("click", playRound);
+
       function game() {
         let yourscore = 0;
         let PCscore = 0;
         for (let i = 0; i < 5; i++) {
-          const playerSelection = prompt(
-            "enter rock, paper or scissors"
-          ).toLowerCase();
+          const rockBtn = document.querySelector("#rock");
+          const paperBtn = document.querySelector("#paper");
+          const scissorsBtn = document.querySelector("#scissors");
+
+          let playerSelection;
+
+          rockBtn.addEventListener("click", () => {
+            playerSelection = "rock";
+          });
+
+          paperBtn.addEventListener("click", () => {
+            playerSelection = "paper";
+          });
+
+          scissorsBtn.addEventListener("click", () => {
+            playerSelection = "scissors";
+          });
+
           const computerSelection = getComputerChoice();
           let res = playRound(playerSelection, computerSelection);
           if (res == "You lose") {
@@ -34,11 +54,13 @@
           "Your final score = " + yourscore + "\nPC final score = " + PCscore
         );
       }
+
       function getComputerChoice() {
         let arr = ["rock", "paper", "scissors"];
         let randindex = Math.floor(Math.random() * arr.length);
         return arr[randindex];
       }
+
       function playRound(playerSelection, computerSelection) {
         let res = [playerSelection, computerSelection];
         if (res[0] == "rock" && res[1] == "paper") {
